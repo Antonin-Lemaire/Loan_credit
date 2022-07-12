@@ -9,6 +9,7 @@ from imblearn.over_sampling import SMOTE
 from sklearn.preprocessing import StandardScaler,MinMaxScaler
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.ensemble import GradientBoostingClassifier
 from lightgbm import LGBMClassifier
 from imblearn.pipeline import Pipeline
@@ -33,23 +34,26 @@ def search(data):
     rebalance = SMOTE()
     pipe = Pipeline([('scaler', scaler), ("balance", rebalance), ('model', model)])
 
-    param_grid = {"model__learning_rate": np.linspace(0.1, 0.5, 5),
+    param_grid = {"model__learning_rate": [0.15, 0.2, 0.25],
                   "model__num_iterations": [10000],
-                  "model__n_estimators": [1000]}
+                  "model__n_estimators": [100]}
 
-    clf = GridSearchCV(pipe, param_grid, cv=3, n_jobs=2)
+    clf = GridSearchCV(pipe, param_grid, cv=5, n_jobs=2)
 
     feats = [f for f in data.columns if
              f not in ['TARGET', 'SK_ID_CURR', 'SK_ID_BUREAU', 'SK_ID_PREV', 'index']]
     X = data[feats]
     y = data['TARGET']
+    selector = SelectKBest(f_classif, k=20)
+    X_new = selector.fit_transform(X, y)
+    print(selector.get_feature_names_out())
 
-    clf.fit(X, y)
+    clf.fit(X_new, y)
 
     print(clf.best_params_)
     selection = clf.best_estimator_
 
-    y_pred = selection.predict(X)
+    y_pred = selection.predict(X_new)
     confu = confusion_matrix(y, y_pred)
     print(confu)
     _, score_value, __ = custom_metric(y, y_pred)
