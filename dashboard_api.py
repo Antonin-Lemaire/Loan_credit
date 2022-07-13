@@ -22,6 +22,13 @@ def request_prediction(model_uri, value_id):
 
 def request_index(model_uri):
     answer = requests.post(model_uri+'get_clients')
+    answer = json.loads(answer.content.decode('utf-8'))
+    return answer['list_of_ids']
+
+
+def get_neighbours(model_uri):
+    neighs = requests.get(model_uri+'get_neighbours')
+
 
 def modus_operandi():
     if not hasattr(modus_operandi, 'df'):
@@ -32,15 +39,13 @@ def modus_operandi():
 
     st.title('Loan credit default risk')
 
-    choices = df.index
+    choices = request_index(API_URI)
     client_id = st.selectbox('Select client ID',
                              choices)
-    data = ClientInput(id=client_id)
-    instance = df.loc[client_id, feats]
-    instance.columns = feats
+
     predict_button = st.button('Predict')
     if predict_button:
-        pred = request_prediction(API_URI, data)
+        pred = request_prediction(API_URI, client_id)
         st.write(pred['value'])
         # st.write('This client\'s risk of defaulting on his loan is {:.2f}'.format(pred[0]))
 
