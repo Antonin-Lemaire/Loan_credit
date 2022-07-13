@@ -1,14 +1,8 @@
 absl-py==1.0.0
 alembic==1.8.0
 altair==4.2.0
-anaconda-client @ file:///C:/ci/anaconda-client_1635342752200/work
-anaconda-navigator==2.1.2
-anaconda-project @ file:///tmp/build/80754af9/anaconda-project_1637161053845/work
-anyio @ file:///C:/ci/anyio_1644463701441/work/dist
 appdirs==1.4.4
 argh==0.26.2
-argon2-cffi @ file:///opt/conda/conda-bld/argon2-cffi_1645000214183/work
-argon2-cffi-bindings @ file:///C:/ci/argon2-cffi-bindings_1644569878360/work
 arrow==0.13.1
 asgiref==3.5.2
 asn1crypto @ file:///tmp/build/80754af9/asn1crypto_1596577642040/work
@@ -130,21 +124,6 @@ jinja2-time @ file:///tmp/build/80754af9/jinja2-time_1617751524098/work
 joblib @ file:///tmp/build/80754af9/joblib_1635411271373/work
 json5 @ file:///tmp/build/80754af9/json5_1624432770122/work
 jsonschema @ file:///Users/ktietz/demo/mc3/conda-bld/jsonschema_1630511932244/work
-jupyter==1.0.0
-jupyter-client @ file:///tmp/build/80754af9/jupyter_client_1616770841739/work
-jupyter-console @ file:///tmp/build/80754af9/jupyter_console_1616615302928/work
-jupyter-contrib-core==0.3.3
-jupyter-contrib-nbextensions==0.5.1
-jupyter-core @ file:///C:/ci/jupyter_core_1646976462809/work
-jupyter-highlight-selected-word==0.2.0
-jupyter-latex-envs==1.4.6
-jupyter-nbextensions-configurator @ file:///D:/bld/jupyter_nbextensions_configurator_1611341297787/work
-jupyter-server @ file:///opt/conda/conda-bld/jupyter_server_1644494914632/work
-jupyterlab @ file:///opt/conda/conda-bld/jupyterlab_1644830542042/work
-jupyterlab-pygments @ file:///tmp/build/80754af9/jupyterlab_pygments_1601490720602/work
-jupyterlab-server @ file:///opt/conda/conda-bld/jupyterlab_server_1644500396812/work
-jupyterlab-widgets @ file:///tmp/build/80754af9/jupyterlab_widgets_1609884341231/work
-jupyterthemes==0.20.0
 keras==2.8.0
 Keras-Preprocessing==1.1.2
 keyring @ file:///C:/ci/keyring_1638531661481/work
