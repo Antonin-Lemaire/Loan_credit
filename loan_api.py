@@ -7,6 +7,7 @@ from fastapi import FastAPI, Request
 import pickle
 from Kernel import get_data
 from Modelisation_single import Instance, ClassifierAPI
+from sklearn.ensemble import KNearestNeighbors
 import lime
 import dill
 from pydantic import BaseModel
@@ -61,6 +62,12 @@ async def predict_outcome(data: ClientInput):
               "context": context}
 
     return jsonify(answer)
+
+
+@app.get('/get_neighbours')
+async def neighbours(client_id):
+    client_input = df.iloc[client_id, :]
+    relatives = KNearestNeighbors()
 
 
 if __name__ == '__main__':

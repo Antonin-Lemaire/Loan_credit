@@ -7,6 +7,7 @@ import json
 import requests
 from Modelisation_single import ClassifierAPI
 import matplotlib.pyplot as plt
+import seaborn as sns
 from loan_api import ClientInput
 from flask import jsonify
 
@@ -28,6 +29,9 @@ def request_index(model_uri):
 
 def get_neighbours(model_uri):
     neighs = requests.get(model_uri+'get_neighbours')
+    neighs = json.loads(neighs.content.decode('utf-8'))
+    neighs_data = pd.DataFrame(neighs)
+    return neighs_data
 
 
 def modus_operandi():
@@ -43,15 +47,29 @@ def modus_operandi():
     client_id = st.selectbox('Select client ID',
                              choices)
 
-    predict_button = st.button('Predict')
+    predict_button = st.checkbox('Predict')
     if predict_button:
         pred = request_prediction(API_URI, client_id)
-        st.write(pred['value'])
-        # st.write('This client\'s risk of defaulting on his loan is {:.2f}'.format(pred[0]))
+        risk = pred['value']
+        st.write('This client\'s risk of defaulting on his loan is {:.2f}'.format(risk))
+        if risk > 0.55:
+            st.write('Loan denied')
+        elif risk < 0.35:
+            st.write('Loan granted')
+        else:
+            st.write('This client\'s case requires further expertise')
 
         explanation = pred['context']
         fig = explanation.as_pyplot_figure()
         st.pyplot(fig)
+    comparison = st.checkbox('Compare to neighbouring clients')
+    if comparison:
+        df_neighbours = get_neighbours(API_URI)
+        selection = [v for v in df.columns if 'TARGET' not in v]
+        choice = st.selectbox('Select indicator', selection)
+        fig = sns.boxplot(x=df_neighbours[choice].groupby(by='TARGET'))
+        st.pyplot(fig)
+        st.write()
 
 
 if __name__ == '__main__':
