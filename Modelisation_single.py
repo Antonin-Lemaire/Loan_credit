@@ -8,7 +8,6 @@ from model import search
 import pickle
 from sklearn.ensemble import GradientBoostingClassifier
 from lime.lime_tabular import LimeTabularExplainer
-import mlflow
 from pydantic import BaseModel
 import dill
 

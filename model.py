@@ -14,7 +14,6 @@ from sklearn.ensemble import GradientBoostingClassifier
 from lightgbm import LGBMClassifier
 from imblearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import GradientBoostingClassifier
 from Kernel import get_data
 import pickle
 
@@ -34,8 +33,8 @@ def search(data):
     rebalance = SMOTE()
     pipe = Pipeline([('scaler', scaler), ("balance", rebalance), ('model', model)])
 
-    param_grid = {"model__learning_rate": [0.15, 0.2, 0.25],
-                  "model__num_iterations": [10000],
+    param_grid = {"model__learning_rate": [0.2],
+                  "model__num_iterations": [5000],
                   "model__n_estimators": [100]}
 
     clf = GridSearchCV(pipe, param_grid, cv=5, n_jobs=2)
